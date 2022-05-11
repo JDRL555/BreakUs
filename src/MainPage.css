@@ -1,0 +1,373 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.head {
+    position: relative;
+    z-index: 100;
+}
+
+.image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 700px;
+    width: auto;
+}
+
+img {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 100%;
+}
+
+.content{
+    position: absolute;
+    width: 100%;
+    padding-top: 10%;
+    z-index: 100;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.content h1{
+    font-size: 100px;
+    color: white;
+    padding: 0;
+}
+
+.content h4{
+    font-size: 35px;
+    color: white;
+}
+
+.content p{
+    font-size: 25px;
+    color: white;
+    text-align: justify;
+    text-align: center;
+}
+
+.content:hover{
+    text-shadow: 0px 10px 5px rgb(63, 63, 63);
+    transition: 1s;
+}
+
+.btn {
+    padding: 10px;
+}
+
+#btn1, #btn2 {
+    font-size: 30px;
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+#btn1:hover, #btn2:hover{
+    background-color: black;
+    color: white;
+    transition: 0.7s;
+}
+
+.info {
+    position: relative;
+    z-index: 100;
+    text-align: center;
+    margin: 80px;
+    padding: 25px;
+    box-shadow: 1px 1px 10px black, -1px 0px 10px black;
+    border-radius: 30px;
+    background-color: white;
+}
+
+.info p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: justify;
+    margin-left: 80px;
+    margin-right: 80px;
+    text-indent: 50px;
+}
+
+.info h2 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 30px;
+}
+
+.whatIs {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.whatIsText {
+    padding-left: 120px;
+}
+
+.whatIsTitle{
+    padding-left: 40px;
+}
+
+.whatIs:hover{
+    transform: scale(1.1);
+    transition: 1s;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+}
+
+.howToStart {
+    padding: 50px;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    list-style-type: none;
+    padding: 10px;
+    text-align: justify;
+    text-indent: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.plan1, .plan2, .plan3 {
+    margin: 30px;
+}
+
+.plan1Title, .plan2Title, .plan3Title {
+    text-align: center;
+}
+
+.howToStart:hover{
+    transform: scale(1.1);
+    transition: 1s;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+}
+
+.plan1:hover {
+    background-color: rgb(63, 63, 209);
+    transform: scale(1.2);
+    padding: 10px;
+    transition: 1s;
+    border-radius: 30px;
+}
+
+.plan2:hover {
+    background-color: rgb(68, 209, 63);
+    transform: scale(1.2);
+    padding: 10px;
+    transition: 1s;
+    border-radius: 30px;
+}
+
+.plan3:hover {
+    background-color: rgb(209, 63, 63);
+    transform: scale(1.2);
+    padding: 10px;
+    transition: 1s;
+    border-radius: 30px;
+}
+
+.whatINeed {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.whatINeedText {
+    padding-right: 80px;
+}
+
+.whatINeedTitle {
+    padding-right: 120px;
+    text-align: inherit;
+    width: 2000px;
+    margin: 0;
+    padding-top: 30px;
+}
+
+.whatINeed:hover {
+    transform: scale(1.1);
+    transition: 1s;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+}
+
+.lowInfo {
+    position: absolute;
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 0;
+    margin: 0;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+footer {
+    font-size: 17px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    padding: 10px;
+}
+
+#WhichRegister {
+    display: none;
+}
+
+#formUser {
+    position: relative;
+    display: none;
+}
+
+#formAdmin {
+    position: relative;
+    display: none;
+}
+
+@media screen and (max-width:576px) {
+    img{
+        width: 250vw;
+    }
+    .image {
+        width: 25px;
+    }
+    .content {
+        width: 100%;
+        padding: 80px;
+        margin: 0;
+    }
+    .content h4{
+        font-size: 30px;
+        width: 500px;
+        text-align: justify;
+    }
+    .content p{
+        width: 400px;
+        font-size: 20px;
+    }
+    .info {
+        padding: 0;
+        margin: 30px;
+        text-indent: 0;
+    }
+    .whatIs {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatIsText {
+        padding: 10px;
+        width: 350px;
+        text-align: center;
+    }
+    .howToStart {
+        padding: 20px;
+    }
+    .howToStart > p{
+        margin: 0;
+        text-indent: 0;
+    }
+    .plans {
+        display: block;
+    }
+    .whatINeed {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatINeedText {
+        position: relative;
+        top: 100px;
+        padding: 10px;
+        width: 300px;
+        text-align: center;
+    }
+    .whatINeedTitle{
+        position: relative;
+        bottom: 450px;
+        left: 20px;
+        width: 550px;
+    }
+    .lowInfo{
+        width: 107%;
+    }
+
+}
+
+@media screen and (max-width:768px) {
+    img{
+        width: 200%;
+    }
+    .image{
+        width: 60%;
+    }
+    .content {
+        width: 100%;
+        padding: 80px;
+        margin: 0;
+    }
+    .content h4{
+        font-size: 30px;
+        width: 500px;
+        text-align: justify;
+    }
+    .content p{
+        width: 400px;
+        font-size: 20px;
+    }
+    .info {
+        padding: 0;
+        margin: 30px;
+        text-indent: 0;
+    }
+    .whatIs {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatIsText {
+        padding: 0;
+        width: 350px;
+    }
+    .howToStart {
+        padding: 20px;
+    }
+    .howToStart > p{
+        margin: 0;
+        text-indent: 0;
+    }
+    .plans {
+        display: block;
+    }
+    .whatINeed {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatINeedText {
+        position: relative;
+        top: 100px;
+        padding: 10px;
+        width: 300px;
+        text-align: center;
+    }
+    .whatINeedTitle{
+        position: relative;
+        bottom: 450px;
+        left: 20px;
+        width: 550px;
+    }
+    .lowInfo{
+        width: 107%;
+    }
+
+}

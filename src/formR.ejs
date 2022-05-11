@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="bootstrap-5.1.3-dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark">
+    <header class="info-top">
+        <button id="ReturnToMainPage" class="btn btn-light">Regresar</button>
+    </header>
+    <div class="contentForm bg-light" id="form">
+        <div class="formQuestion" id="form_question">
+            <form class="form">
+                <input type="button" class="btn btn-light" id="ReturnOption" value="Regresar">
+                <h3 id="questionTitle">¿Qué tipo de usuario te gustaría ser?</h3>
+                <input type="button" class="btn btn-dark ml-5" id="userForm" value="Atleta">
+                <input type="button" class="btn btn-dark ml-5" id="trainerForm" value="Entrenador">
+            </form>
+        </div>
+        <div class="contentRegisterU" id="form_user">
+            <form method="post" action="/Registrar_Atleta" class="form">
+                <h2>Atleta</h2>
+                <p>
+                    Este tipo de usuario te permite ingresar a las rutinas que tu respectivo
+                    entrenador te asigne, completar una cierta cantidad de rutinas, y 
+                    poder llevar un conteo de las rutinas completadas en tu información
+                </p>
+                <input class="form-control mb-3" type="text" id="nameRegisterU" placeholder="Nombres" name="nombresAtleta">
+                <input class="form-control mb-3" type="text" id="lastNameRegisterU" placeholder="Apellidos" name="apellidosAtleta">
+                <input class="form-control mb-3" type="text" id="userRegisterU" placeholder="usuario" name="usuarioAtleta">
+                <input class="form-control mb-3" type="text" id="emailRegisterU" placeholder="Correo" name="correoAtleta">
+                <input class="form-control mb-3" type="password" id="passwordRegisterU" placeholder="Contraseña" name="claveAtleta">
+                <input class="form-control mb-3" type="password" id="passwordVerificationRegisterU" placeholder="Verifique contraseña" name="verificacionAtleta">
+                <input class="btn btn-dark" type="submit" id="btnRegisterU" value="Registrar">
+            </form>
+        </div>
+        <div class="contentRegisterT" id="form_trainer">
+            <form method="post" action="/Registrar_Entrenador" class="form">
+                <h2>Entrenador</h2>
+                <p>
+                    Este tipo de usuario te permite administrar las rutinas de los atletas
+                    asignados y así llevar un control de las rutinas que los mismos hayan
+                    completado
+                </p>
+                <input class="form-control mb-3" type="text" id="nameRegisterT" placeholder="Nombres" name="nombresEntrenador">
+                <input class="form-control mb-3" type="text" id="lastNameRegisterT" placeholder="Apellidos" name="apellidosEntrenador">
+                <input class="form-control mb-3" type="text" id="userRegisterT" placeholder="usuario" name="usuarioEntrenador">
+                <input class="form-control mb-3" type="email" id="emailRegisterT" placeholder="Correo" name="correoEntrenador">
+                <input class="form-control mb-3" type="password" id="passwordRegisterT" placeholder="Contraseña" name="claveEntrenador">
+                <input class="form-control mb-3" type="password" id="passwordVerificationRegisterT" placeholder="Verifique contraseña" name="verificarEntrenador">
+                <input class="btn btn-dark" type="submit" id="btnRegisterT" value="Registrar">
+            </form>
+        </div>
+    </div>
+</body>
+<script src="form.js"></script>
+</html>

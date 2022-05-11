@@ -1,0 +1,4 @@
+
+
+
+btnL.addEventListener("click", LoginAdmin)

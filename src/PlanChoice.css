@@ -1,0 +1,71 @@
+.Plans {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.Plans h1 {
+    font-size: 80px;
+    padding: 30px;
+}
+
+#plan1 {
+    position: relative;
+    border: none;
+    background: none;
+    width: 100%;
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-block: 20px;
+    padding-block: 10px;
+}
+
+#plan1:hover{
+    font-size: 50px;
+    padding: 20px;
+    color: white;
+    border-radius: 30px;
+    background-color: rgb(46, 46, 155);
+    transform: scale(1);
+    transition: 1s;
+}
+#plan2 {
+    position: relative;
+    border: none;
+    background: none;
+    width: 100%;
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-block: 20px;
+    padding-block: 10px;
+}
+
+#plan2:hover{
+    font-size: 50px;
+    padding: 20px;
+    color: white;
+    border-radius: 30px;
+    background-color: rgb(54, 158, 50);
+    transform: scale(1);
+    transition: 1s;
+}
+
+#plan3 {
+    position: relative;
+    border: none;
+    background: none;
+    width: 100%;
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-block: 20px;
+    padding-block: 10px;
+}
+
+#plan3:hover{
+    font-size: 50px;
+    padding: 20px;
+    color: white;
+    border-radius: 30px;
+    background-color: rgb(156, 51, 51);
+    transform: scale(1);
+    transition: 1s;
+}
