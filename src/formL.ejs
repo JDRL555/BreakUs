@@ -13,41 +13,20 @@
         <button id="ReturnToMainPage" class="btn btn-dark">Regresar</button>
     </header>
     <div class="contentForm bg-dark text-light" id="form">
-        <div class="formQuestion" id="form_question">
-            <form class="form">
-                <input type="button" class="btn btn-light" id="ReturnOption" value="Regresar">
-                <h3 id="questionTitle">¿Con qué tipo de usuario te gustaría ingresar?</h3>
-                <input type="button" class="btn btn-light ml-5" id="userForm" value="Atleta">
-                <input type="button" class="btn btn-light ml-5" id="trainerForm" value="Entrenador">
-            </form>
-        </div>
-        <div class="contentRegisterU" id="form_user">
-            <form method="POST" action="/Iniciar_Sesion_Atleta" class="form">
-                <h2>Atleta</h2>
+        <div class="contentRegisterU" id="form_login">
+            <form method="POST" action="/Iniciar_Sesion" class="form">
+                <h2>Inicia Sesión</h2>
                 <p>
-                    Este tipo de usuario te permite ingresar a las rutinas que tu respectivo
-                    entrenador te asigne, completar una cierta cantidad de rutinas, y 
-                    poder llevar un conteo de las rutinas completadas en tu información
+                   Si te registraste, puedes ingresar a tu cuenta (bien sea, como atleta o como entrenador), y obtener todos los beneficios que BreakUs tiene para ti
                 </p>
                 <input class="form-control mb-3" type="text" id="userLoginU" placeholder="usuario" name="usuarioLoginA">
                 <input class="form-control mb-3" type="password" id="passwordLoginU" placeholder="Contraseña" name="claveLoginA">
                 <input class="btn btn-light" type="submit" id="btnRegisterU" value="Iniciar Sesión">
-            </form>
-        </div>
-        <div class="contentRegisterT" id="form_trainer">
-            <form method="get" action="Iniciar_Sesion_Entrenador" class="form">
-                <h2>Entrenador</h2>
-                <p>
-                    Este tipo de usuario te permite administrar las rutinas de los atletas
-                    asignados y así llevar un control de las rutinas que los mismos hayan
-                    completado
-                </p>
-                <input class="form-control mb-3" type="text" id="userLoginT" placeholder="usuario" name="usuarioLoginT">
-                <input class="form-control mb-3" type="password" id="passwordLoginT" placeholder="Contraseña" name="contraseñaLoginT">
-                <input class="btn btn-light" type="submit" id="btnRegisterT" value="Iniciar Sesión">
+                <input type="button" id="GoToRegister" class="btn btn-dark" value="¿No tienes una cuenta registrada?, Registrate aquí">
             </form>
         </div>
     </div>
+   
 </body>
-<script src="form.js"></script>
+<script src="formL.js"></script>
 </html>

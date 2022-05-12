@@ -16,13 +16,10 @@ input:focus{
     transition: 1s;
 }
 
-#form_user, #form_trainer, #ReturnOption{
+#form_user, #form_trainer, #ReturnOption, #GoToLogin{
     display: none;
 }
 
-#alertUsuario, #alertCorreo, #alertContraseña, #alertVerificacion{
-    display: none;
-} 
 
 #ReturnOption{
     margin-top: 0;

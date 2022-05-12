@@ -5,7 +5,7 @@ let plan3 = document.getElementById("plan3")
 function Plan1(){
     var option = confirm("Estas a punto de entrar al plan Novato, seguro que quieres continuar?") 
     if(option==true){
-        window.location.assign("RutinePage.html");
+        window.location.assign("/ProfilePage")
     }else{
         return false
     }
@@ -13,7 +13,7 @@ function Plan1(){
 function Plan2(){
     var option = confirm("Estas a punto de entrar al plan Intermedio, seguro que quieres continuar?") 
     if(option==true){
-        window.location.assign("RutinePage.html");
+        window.location.assign("/ProfilePage");
     }else{
         return false
     }
@@ -21,7 +21,7 @@ function Plan2(){
 function Plan3(){
     var option = confirm("Estas a punto de entrar al plan Avanzado, seguro que quieres continuar?") 
     if(option==true){
-        window.location.assign("RutinePage.html");
+        window.location.assign("/ProfilePage");
     }else{
         return false
     }
