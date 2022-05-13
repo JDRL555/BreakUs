@@ -1,57 +1,63 @@
-body {
+*{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-ul {
+header{
+    width: 100%;
+    height: 80px;
+    background-color: black;
+    color: white;
+}
+
+.nav{
+    padding: 25px;
+    height: 100px;
+    font-size: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+ul{
     list-style-type: none;
-    margin: 0;
+}
+
+li:hover{
+    transform: scale(1.1);
+    transition: 1s;
+    border-radius: 20px;
+}
+
+nav{
+    float: right;
+    display: flex;
+}
+
+nav li{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.breakus{
+    float: left;
+}
+
+nav #profileBtn:hover li{
+    display: block;
+    margin-left: 15px;
     padding: 10px;
     background-color: black;
 }
 
-li, p {
-    font-size: 25px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    display: inline;
-    color: white;
-    padding: 10px;
-    margin: 20px;
-}
 
-li:hover, p:hover{
-    background-color: white;
-    color: black;
-    transition: 1s;
-}
-
-a:hover {
-    color: black;
-    transition: 1s;
-}
-
-li {
-    position: relative;
-    left: 40%;
-}
-
-li a {
-    text-decoration: none;
-    color: white;
-}
-
-li>ul {
+nav #profileBtn li{
     display: none;
 }
 
-li:hover>ul{
-    display: block;
-    position: absolute;
-    padding: 0;
-    top: 50px;
-    left: 0;
-    width: 200px;
+nav ul li .ul{
+    display: none;
 }
+
 
 #rutine {
     display: block;
@@ -66,7 +72,6 @@ li:hover>ul{
     width: 100%;
     height: 100px;
     font-size: 30px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-align: left;
 }
 

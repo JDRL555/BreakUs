@@ -1,3 +1,8 @@
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+
+const verification = jwt.verify()
+
 let plan1 = document.getElementById("plan1")
 let plan2 = document.getElementById("plan2")
 let plan3 = document.getElementById("plan3")

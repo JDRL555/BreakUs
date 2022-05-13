@@ -1,12 +1,15 @@
 require("./Database/database")()
 const conexion = conn()
 const express = require("express")
+require("dotenv").config()
 const server = express()
 const port = 4000
 const body = require("body-parser")
 const bcrypt = require("bcrypt")
 const ejs = require("ejs")
 const path = require("path")
+const jwt = require("jsonwebtoken")
+
 
 server.set("views", path.join(__dirname, "/src"))
 server.engine("ejs", ejs.__express)
@@ -50,7 +53,7 @@ server.post("/Registrar_Atleta", (req, res)=>{
     var expresion = /\w+@\w+\.+[a-z]/; 
     bcrypt.hash(claveAtleta, 10, (err, hash)=>{
         if(err) throw err
-        let sql = `INSERT INTO reg_user(name_u, lastName_u, user_u, email_u, psw_u, access_level_user, pass_u, time_u) VALUES ("${nombresAtleta}","${apellidosAtleta}", "${usuarioAtleta}", "${correoAtleta}", "${hash}", "Atleta", "1", "${fecha}")`
+        let sql = `INSERT INTO reg_user(name_u, lastName_u, user_u, email_u, psw_u, access_level_user) VALUES ("${nombresAtleta}","${apellidosAtleta}", "${usuarioAtleta}", "${correoAtleta}", "${hash}", "Atleta")`
         conexion.query(sql, ()=>{
             if(!nombresAtleta||!apellidosAtleta||!usuarioAtleta||!correoAtleta||!claveAtleta||!verificacionAtleta){
                 res.send("Complete los datos para continuar")
@@ -84,7 +87,7 @@ server.post("/Registrar_Entrenador", (req, res)=>{
     var expresion = /\w+@\w+\.+[a-z]/; 
     bcrypt.hash(claveEntrenador, 10, (err, hash)=>{
         if(err) throw err
-        let sql = `INSERT INTO reg_trainer(name_t, lastName_t, user_t, email_t, psw_t, access_level_trainer, pass_t, time_t) VALUES ("${nombresEntrenador}","${apellidosEntrenador}", "${usuarioEntrenador}", "${correoEntrenador}", "${hash}", "Entrenador", "1", "${fecha}")`
+        let sql = `INSERT INTO reg_trainer(name_t, lastName_t, user_t, email_t, psw_t, access_level_trainer) VALUES ("${nombresEntrenador}","${apellidosEntrenador}", "${usuarioEntrenador}", "${correoEntrenador}", "${hash}", "Entrenador")`
         conexion.query(sql, ()=>{
             if(!nombresEntrenador||!apellidosEntrenador||!usuarioEntrenador||!correoEntrenador||!claveEntrenador||!verificacionEntrenador){
                 res.send("Complete los datos para continuar")
@@ -124,8 +127,9 @@ server.post("/Iniciar_Sesion", (req, res)=>{
                         if(err){
                             console.log("Contraseña del entrenador incorrecta")
                         }else{
-                            console.log("Entrenador veradero")
-                            res.redirect("/PlanChoice")
+                            const idt = data[0].id_t
+                            const token = jwt.sign({id: idt}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
+                            // conexion.query(`INSERT INTO reg_trainer(pass_t, time_t) VALUES("${token}", NOW())`)
                         }
                     })
                 }
@@ -136,7 +140,13 @@ server.post("/Iniciar_Sesion", (req, res)=>{
                     console.log("Contraseña del atleta incorrecta")
                 }else{
                     console.log("Atleta veradero")
-                    res.redirect("/PlanChoice")
+                    const idu = data[0].id_u
+                            const token = jwt.sign({id: idu}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
+                            console.log(token, idu)
+                            // conexion.query(`SELECT * FROM reg_user WHERE id_u = "${idu}";`, (err)=>{
+                            //     if(err) throw err
+                            //     conexion.query(`INSERT INTO reg_user(pass_u, time_u) VALUES("${token}", NOW());`)
+                            // })
                 }
             })
         }
