@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS reg_trainer(
 );
 
 CREATE TABLE IF NOT EXISTS plan_choice(
-    id_u INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    id_plan INT UNSIGNED NOT NULL,
+    id_u INT UNSIGNED NOT NULL,
+    id_plan INT UNSIGNED NOT NULL AUTO_INCREMENT,
     plan_type SET("NOVATO", "INTERMEDIO", "AVANZADO"),
     PRIMARY KEY(id_plan),
     FOREIGN KEY(id_u) REFERENCES reg_user(id_u)
 );
 
 CREATE TABLE IF NOT EXISTS routines_u(
-    id_u INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id_u INT UNSIGNED NOT NULL,
     id_plan INT UNSIGNED NOT NULL,
     routines_completed INT,
     PRIMARY KEY (routines_completed),
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS routines_u(
 );
 
 CREATE TABLE IF NOT EXISTS routines_novato(
-    id_t INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id_t INT UNSIGNED NOT NULL,
     id_plan INT UNSIGNED NOT NULL,
     exercies1 TEXT,
     exercies2 TEXT,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS routines_novato(
 );
 
 CREATE TABLE IF NOT EXISTS routines_intermedio(
-    id_t INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id_t INT UNSIGNED NOT NULL,
     id_plan INT UNSIGNED NOT NULL,
     exercies1 TEXT,
     exercies2 TEXT,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS routines_intermedio(
 );
 
 CREATE TABLE IF NOT EXISTS routines_avanzado(
-    id_t INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id_t INT UNSIGNED NOT NULL,
     id_plan INT UNSIGNED NOT NULL,
     exercies1 TEXT,
     exercies2 TEXT,

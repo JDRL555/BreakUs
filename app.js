@@ -1,8 +1,9 @@
 require("./Database/database")()
+const { ejecutarFuncion } = require("./functions/auto_increment")
+require("dotenv").config()
 const conexion = conn()
 const express = require("express")
 const session = require("express-session")
-require("dotenv").config()
 const app = express()
 const port = 4000
 const body = require("body-parser")
@@ -35,32 +36,37 @@ app.listen(port, ()=>{
 })
 
 //Rutas(get):
-app.get("/", (req, res)=>{
+app.get("/", notAutenthicate, (req, res)=>{
     res.render("MainPage.ejs")
 })
 
-app.get("/Login", (req, res)=>{
+app.get("/Login", notAutenthicate, (req, res)=>{
     res.render("formL.ejs")
 })
 
-app.get("/Register", (req, res)=>{
+app.get("/Register", notAutenthicate, (req, res)=>{
     res.render("formR.ejs")
 })
 
-app.get("/PlanChoice", (req, res) =>{
+app.get("/PlanChoice", autenthicate_plan_choice, (req, res) =>{
     res.render("PlanChoice.ejs")
 })
 
-app.get("/UserPage", autenthicate, (req, res)=>{
+app.get("/UserPage", autenthicate, autenthicate_user, (req, res)=>{
     res.render("UserPage.ejs")
 })
 
-app.get("/TrainerPage", autenthicate, (req, res)=>{
+app.get("/TrainerPage", autenthicate, autenthicate_trainer, (req, res)=>{
     res.render("TrainerPage.ejs")
 })
 
-app.get("/logout", (req, res)=>{
-    res.clearCookie("jwt")
+app.get("/logout_user", (req, res)=>{
+    res.clearCookie("jwt_u")
+    res.redirect("/")
+})
+
+app.get("/logout_trainer", (req, res)=>{
+    res.clearCookie("jwt_t")
     res.redirect("/")
 })
 
@@ -157,8 +163,8 @@ app.post("/Iniciar_Sesion", (req, res)=>{
                             console.log("Contraseña del entrenador incorrecta")
                         }else{
                             const idt = data[0].id_t
-                            const token = jwt.sign({id: idt}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
-                            res.cookie("jwt", token)
+                            const token = jwt.sign({id: idt}, process.env.SECRET_WORD_TRAINER, {expiresIn: process.env.EXPIRE_JWT})
+                            res.cookie("jwt_t", token)
                             conexion.query(`UPDATE reg_trainer SET pass_t = "${token}", time_t = NOW() WHERE id_t = "${idt}";`)
                             res.redirect("/TrainerPage")
                         }
@@ -172,47 +178,170 @@ app.post("/Iniciar_Sesion", (req, res)=>{
                 }else{
                     console.log("Atleta veradero")
                     const idu = data[0].id_u
-                    const token = jwt.sign({id: idu}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
-                    res.cookie("jwt", token)
+                    const token = jwt.sign({id: idu}, process.env.SECRET_WORD_USER, {expiresIn: process.env.EXPIRE_JWT})
+                    res.cookie("jwt_u", token)
                     conexion.query(`UPDATE reg_user SET pass_u = "${token}", time_u = NOW() WHERE id_u = "${idu}";`)
-                    res.redirect("/UserPage")
+                    res.redirect("/PlanChoice")
                 }
             })
         }
     })
 })
 
+app.get("/plan_novato", (req, res)=>{
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT id_plan FROM plan_choice WHERE id_u = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                conexion.query(`INSERT INTO plan_choice(id_u, plan_type) VALUES("${verification.id}", "NOVATO")`)
+                res.redirect("/UserPage")
+            }else{
+                res.redirect("/UserPage")
+            }
+        })
+    }else{
+        console.log("No funciono xd")
+    }
+})
+
+app.get("/plan_intermedio", (req, res)=>{
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT id_plan FROM plan_choice WHERE id_u = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                conexion.query(`INSERT INTO plan_choice(id_u, plan_type) VALUES("${verification.id}", "INTERMEDIO")`)
+                res.redirect("/UserPage")
+            }else{
+                res.redirect("/UserPage")
+            }
+        })
+    }else{
+        console.log("No funciono xd")
+    }
+})
+
+app.get("/plan_avanzado", (req, res)=>{
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT id_plan FROM plan_choice WHERE id_u = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                conexion.query(`INSERT INTO plan_choice(id_u, plan_type) VALUES("${verification.id}", "AVANZADO")`)
+                res.redirect("/UserPage")
+            }else{
+                res.redirect("/UserPage")
+            }
+        })
+    }else{
+        console.log("No funciono xd")
+    }
+})
+
 app.post("/TrainerPage/newRoutine", (req, res)=>{
-    const verification = promisify(jwt.verify)(req.cookies.jwt, process.env.SECRET_WORD)
-    conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}";`, (err, data)=>{
-    console.log(data[0])
-    })
+    const verification = jwt.verify(req.cookies.jwt, process.env.SECRET_WORD)
+    
     // const {exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise7, exercise8, exercise9, exercise10} = req.body
     // conexion.query(`INSERT INTO routines_novato(exercies1, exercies2, exercies3, exercies4, exercies5, exercies6, exercies7, exercies8, exercies9, exercies10) VALUES("${exercise1}", "${exercise2}", "${exercise3}", "${exercise4}", "${exercise5}", "${exercise6}", "${exercise7}", "${exercise8}", "${exercise9}", "${exercise10}");`, (err, data)=>{
     // })
 })
 
 function autenthicate(req, res, next){
-    if(req.cookies.jwt){
-        const verification = jwt.verify(req.cookies.jwt, process.env.SECRET_WORD)
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
         conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}";`, (err, data)=>{
             if(data[0] == undefined){
-                console.log("No tienes permiso Atleta .i.")
-                conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}";`, (err, data)=>{
-                    if(data[0] == undefined){
-                        console.log("No tienes permiso entrenador .i.")
-                    }else{
-                        console.log("Bienvenido entrenador uwu")
-                        return next()
-                    }
-                })
+                console.log("El atleta no tiene permiso")
             }else{
-                console.log("Bievenido atleta uwu")
+                console.log("Bienvenido atleta uwu")
                 return next()
             }
         })
     }else{
-        console.log(".i.")
+        if(req.cookies.jwt_t){
+            const verification = jwt.verify(req.cookies.jwt_t, process.env.SECRET_WORD_TRAINER)
+            conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}";`, (err, data)=>{
+                if(data[0] == undefined){
+                    console.log("El entrenador no tiene permiso")
+                }else{
+                    console.log("Bienvenido entrenador uwu")
+                    return next()
+                }
+            })
+        }else{
+            console.log(".i.")
+            res.redirect("/")
+        }
+    }
+}
+
+function notAutenthicate(req, res, next){
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}";`, (err, data)=>{
+            if(data[0] == undefined){
+                return next()
+            }else{
+                res.redirect("/UserPage")
+            }
+        })
+    }else{
+        if(req.cookies.jwt_t){
+            const verification = jwt.verify(req.cookies.jwt_t, process.env.SECRET_WORD_TRAINER)
+            conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}"`, (err, data)=>{
+                if(data[0] == undefined){
+                    return next()
+                }else{
+                    res.redirect("/TrainerPage")
+                }
+            })
+        }else{
+            return next()
+        }
+    }
+}
+
+function autenthicate_plan_choice(req, res, next){
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT id_plan FROM plan_choice WHERE id_u = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                return next()
+            }else{
+                res.redirect("/UserPage")
+            }
+        })
+    }else{
         res.redirect("/")
     }
 }
+
+function autenthicate_user(req, res, next){
+    if(req.cookies.jwt_u){
+        const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
+        conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                res.redirect("/TrainerPage")
+            }else{
+                return next()
+            }
+        })
+    }else{
+        res.redirect("/TrainerPage")
+    }
+}
+
+function autenthicate_trainer(req, res, next){
+    if(req.cookies.jwt_t){
+        const verification = jwt.verify(req.cookies.jwt_t, process.env.SECRET_WORD_TRAINER)
+        conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}"`, (err, data)=>{
+            if(data[0] == undefined){
+                res.redirect("/UserPage")
+            }else{
+                return next()
+            }
+        })
+    }else{
+        res.redirect("/UserPage")
+    }
+    
+}
+
