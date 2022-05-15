@@ -180,15 +180,11 @@ img {
 }
 
 .whatINeedText {
-    padding-right: 80px;
+    padding-left: 120px;
 }
 
 .whatINeedTitle {
-    padding-right: 120px;
-    text-align: inherit;
-    width: 2000px;
-    margin: 0;
-    padding-top: 30px;
+    padding-left: 40px;
 }
 
 .whatINeed:hover {
@@ -233,29 +229,27 @@ footer {
 
 @media screen and (max-width:576px) {
     img{
-        width: 250vw;
+        width: 100vw;
     }
-    .image {
-        width: 25px;
-    }
-    .content {
+    header{
         width: 100%;
-        padding: 80px;
-        margin: 0;
+    }
+    .image{
+        width: 100vw;
     }
     .content h4{
         font-size: 30px;
-        width: 500px;
-        text-align: justify;
+        width: 80%;
+        text-align: center;
     }
     .content p{
-        width: 400px;
         font-size: 20px;
+    }
+    .btn{
+        display: inline-block;
     }
     .info {
         padding: 0;
-        margin: 30px;
-        text-indent: 0;
     }
     .whatIs {
         display: block;
@@ -263,9 +257,7 @@ footer {
         padding-right: 0;
     }
     .whatIsText {
-        padding: 10px;
-        width: 350px;
-        text-align: center;
+        padding: 0;
     }
     .howToStart {
         padding: 20px;
@@ -284,50 +276,45 @@ footer {
         padding-right: 0;
     }
     .whatINeedText {
-        position: relative;
-        top: 100px;
         padding: 10px;
-        width: 300px;
         text-align: center;
     }
     .whatINeedTitle{
-        position: relative;
-        bottom: 450px;
-        left: 20px;
-        width: 550px;
+        margin: 20px;
+        padding-left: 0;
     }
-    .lowInfo{
-        width: 107%;
-    }
-
 }
 
 @media screen and (max-width:768px) {
     img{
-        width: 200%;
+        width: 100vw;
+    }
+    header{
+        width: 100%;
     }
     .image{
-        width: 60%;
-    }
-    .content {
-        width: 100%;
-        padding: 80px;
-        margin: 0;
+        width: 100vw;
     }
     .content h4{
         font-size: 30px;
-        width: 500px;
-        text-align: justify;
+        width: 100%;
+        text-align: center;
     }
     .content p{
-        width: 400px;
+        width: 100%;
         font-size: 20px;
+    }
+    .btn{
+        display: inline-block;
     }
     .info {
         padding: 0;
-        margin: 30px;
-        text-indent: 0;
     }
+    .whatIs, .howToStart, .whatINeed{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
     .whatIs {
         display: block;
         padding-left: 0;
@@ -335,7 +322,6 @@ footer {
     }
     .whatIsText {
         padding: 0;
-        width: 350px;
     }
     .howToStart {
         padding: 20px;
@@ -354,20 +340,75 @@ footer {
         padding-right: 0;
     }
     .whatINeedText {
-        position: relative;
-        top: 100px;
         padding: 10px;
-        width: 300px;
         text-align: center;
     }
     .whatINeedTitle{
-        position: relative;
-        bottom: 450px;
-        left: 20px;
-        width: 550px;
+        margin: 20px;
+        padding-left: 0;
     }
-    .lowInfo{
-        width: 107%;
-    }
+}
 
+@media screen and (max-width:992px) {
+    img{
+        width: 100vw;
+    }
+    header{
+        width: 100%;
+    }
+    .image{
+        width: 100vw;
+    }
+    .content h4{
+        font-size: 30px;
+        width: 100%;
+        text-align: center;
+    }
+    .content p{
+        width: 100%;
+        font-size: 20px;
+    }
+    .btn{
+        display: inline-block;
+    }
+    .info {
+        padding: 0;
+    }
+    .whatIs, .howToStart, .whatINeed{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    .whatIs {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatIsText {
+        padding: 0;
+    }
+    .howToStart {
+        padding: 20px;
+    }
+    .howToStart > p{
+        margin: 0;
+        text-indent: 0;
+    }
+    .plans {
+        display: block;
+    }
+    .whatINeed {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .whatINeedText {
+        padding: 10px;
+        text-align: center;
+    }
+    .whatINeedTitle{
+        margin: 20px;
+        padding-left: 0;
+    }
 }

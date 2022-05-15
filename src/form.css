@@ -11,6 +11,10 @@ body{
     border-radius: 20px;
 }
 
+p{
+    text-align: justify;
+}
+
 input:focus{
     background-color: rgb(70, 70, 70);
     transition: 1s;
@@ -23,4 +27,15 @@ input:focus{
 
 #ReturnOption{
     margin-top: 0;
+}
+
+@media screen and (max-width:576px) {
+    .contentForm{
+        margin: 20px 20px;
+    }
+}
+@media screen and (max-width:768px) {
+    .contentForm{
+        margin: 50px 70px;
+    }
 }

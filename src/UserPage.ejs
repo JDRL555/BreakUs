@@ -8,8 +8,103 @@
     <link rel="stylesheet" href="UserPage.css">
 </head>
 <body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li class="breakus"><b>BreakUs</b></li>
+                <nav>
+                    <li id="rutineBtn">Rutinas</li>
+                    <li id="planBtn">Planes</li>
+                    <li id="progressBtn">Progreso</li>
+                    <li id="profileBtn">Cuenta
+                        <ul class="ul">
+                            <li class="anotherli" id="userBtn">Datos</li>
+                            <li class="anotherli" id="close">Cerrar Sesion</li>
+                        </ul>
+                    </li>
+                </nav>
+            </ul>
+        </div>           
+    </header>
+    <div id="rutine">
+        <div>
+            <input type="button" id="day1" value="Dia 1">
+        </div>
+        <div id="rutine1">
+            <div class="e1">
+                    <h3>5 push up x 3</h3>
+                <h4>
+                    Coloca las manos alineadas a la altura de los hombros, justo debajo. Separa los dedos de la mano para que puedas soportar 
+                    mejor tu propio peso. Cuando realices la flexión, rota las manos hacia afuera para que el hombro también sienta la rotación.
+                </h4>
+            </div>
+
+            <div class="e2">
+                    <h3>5 pull up x 3</h3>
+                    <h4>
+                        Agarra la barra con ambas manos, separadas el ancho de los hombros y las palmas mirando hacia delante. Cuélgate con los brazos 
+                        y los codos completamente estirados. Tira del cuerpo hacia arriba, la barbilla por encima de la barra. Contrae la espalda, 
+                        relaja el cuello y aleja los hombros de las orejas.
+                    </h4>
+            </div>
+
+            <div class="e3">
+                <h3>5 fondos x 3</h3>
+                <h4>
+                    Los fondos pueden hacerse en barras paralelas de modo que se trabaja de forma intensa el pectoral y el tríceps colocando los brazos 
+                    estirados a la anchura de los hombros y elevando y descendiendo el cuerpo en vertical hasta hacer un ángulo de 90 grados con el codo.
+                </h4>
+            </div>
+
+            <div class="e4">
+                <h3>20 seg plancha x 3</h3>
+                <h4>
+                    Hay que mantener los brazos flexionados, hacia fuera y bien rectos. Se aprietan los omoplatos y se extiende o abre la espalda para que 
+                    el cuerpo quede completamente erguido o paralelo al suelo. Hay que presionar los muslos hacia arriba al tiempo que se estiran los talones.
+                </h4>
+            </div>
+            <input type="button" id="btn_ready" value="Rutina ejecutada">
+        </div>
+    </div>
+
+    <div id="user">
+        <table class="progress">
+            <tbody class="table">
+                <tr>
+                    <td><b>Nombre</b></td>
+                    <td id="value_name"></td>
+                </tr>
+                <tr>
+                    <td><b>Apellido</b></td>
+                    <td id="value_lastName"></td>                
+                </tr>
+                <tr>
+                    <td><b>Usuario</b></td>
+                    <td id="value_user"></td>
+                </tr>
+                <tr>
+                    <td><b>Correo</b></td>
+                    <td id="value_email"></td>                
+                </tr>
+                <tr>
+                    <td><b>Hora y fecha de registro</b></td>
+                    <td id="value_date"></td>
+                </tr>
+                <tr>
+                    <td><b>Plan asignado</b></td>
+                    <td id="value_plan">Novato</td>
+                </tr>
+                <tr>
+                    <td><b>Tipo de usuario registrado</b></td>
+                    <td id="value_typeUser">Estandar</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     
 </body>
-<script src="NiveldeAcceso.js"></script>
+<script src="logout.js"></script>
 <script src="UserPage.js"></script>
 </html>

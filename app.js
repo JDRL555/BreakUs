@@ -1,60 +1,82 @@
 require("./Database/database")()
 const conexion = conn()
 const express = require("express")
+const session = require("express-session")
 require("dotenv").config()
-const server = express()
+const app = express()
 const port = 4000
 const body = require("body-parser")
 const bcrypt = require("bcrypt")
 const ejs = require("ejs")
 const path = require("path")
 const jwt = require("jsonwebtoken")
+const cookieParser = require("cookie-parser")
+const { promisify } = require("util")
 
+//middelwares:
+app.set("views", path.join(__dirname, "/src"))
+app.engine("ejs", ejs.__express)
+app.set("view engine", "ejs")
 
-server.set("views", path.join(__dirname, "/src"))
-server.engine("ejs", ejs.__express)
-server.set("view engine", "ejs")
+app.use(express.static(__dirname + "/src"))
+app.use(body.urlencoded({extended: true}))
 
-server.use(express.static(__dirname + "/src"))
-server.use(body.urlencoded({extended: true}))
+app.use(cookieParser())
 
-server.listen(port, ()=>{
+app.use(session({
+    secret: '123',
+    resave: true,
+    saveUninitialized: true
+}))
+
+//Inicialización del servidor
+app.listen(port, ()=>{
     console.log("Server running on port... http://localhost:"+ port)
 })
 
-server.get("/", (req, res)=>{
+//Rutas(get):
+app.get("/", (req, res)=>{
     res.render("MainPage.ejs")
 })
 
-server.get("/Login", (req, res)=>{
+app.get("/Login", (req, res)=>{
     res.render("formL.ejs")
 })
 
-server.get("/Register", (req, res)=>{
+app.get("/Register", (req, res)=>{
     res.render("formR.ejs")
 })
 
-server.get("/PlanChoice", (req, res) =>{
+app.get("/PlanChoice", (req, res) =>{
     res.render("PlanChoice.ejs")
 })
 
-server.get("/ProfilePage", (req, res)=>{
-    res.render("ProfilePage.ejs")
+app.get("/UserPage", autenthicate, (req, res)=>{
+    res.render("UserPage.ejs")
 })
 
-server.post("/Registrar_Atleta", (req, res)=>{
+app.get("/TrainerPage", autenthicate, (req, res)=>{
+    res.render("TrainerPage.ejs")
+})
+
+app.get("/logout", (req, res)=>{
+    res.clearCookie("jwt")
+    res.redirect("/")
+})
+
+//Rutas(post):
+app.post("/Registrar_Atleta", (req, res)=>{
     const nombresAtleta = req.body.nombresAtleta
     const apellidosAtleta = req.body.apellidosAtleta
     const usuarioAtleta = req.body.usuarioAtleta
     const correoAtleta = req.body.correoAtleta
     const claveAtleta = req.body.claveAtleta
     const verificacionAtleta = req.body.verificacionAtleta
-    const fecha = new Date()
     var expresion = /\w+@\w+\.+[a-z]/; 
     bcrypt.hash(claveAtleta, 10, (err, hash)=>{
-        if(err) throw err
-        let sql = `INSERT INTO reg_user(name_u, lastName_u, user_u, email_u, psw_u, access_level_user) VALUES ("${nombresAtleta}","${apellidosAtleta}", "${usuarioAtleta}", "${correoAtleta}", "${hash}", "Atleta")`
-        conexion.query(sql, ()=>{
+        if(err){
+            throw err
+        }else{
             if(!nombresAtleta||!apellidosAtleta||!usuarioAtleta||!correoAtleta||!claveAtleta||!verificacionAtleta){
                 res.send("Complete los datos para continuar")
             }
@@ -70,25 +92,28 @@ server.post("/Registrar_Atleta", (req, res)=>{
             else if(claveAtleta!=verificacionAtleta){
                 res.send("Las contraseñas no coinciden")
             }else{
-                res.send("Usuario Registrado")
+                let sql = `INSERT INTO reg_user(name_u, lastName_u, user_u, email_u, psw_u, access_level_user) VALUES ("${nombresAtleta}","${apellidosAtleta}", "${usuarioAtleta}", "${correoAtleta}", "${hash}", "Atleta")`
+                conexion.query(sql, (err)=>{
+                    if(err) throw err
+                    res.redirect("/Login")
+                })
             }
-        })
+        }
     })
 })
 
-server.post("/Registrar_Entrenador", (req, res)=>{
+app.post("/Registrar_Entrenador", (req, res)=>{
     const nombresEntrenador = req.body.nombresEntrenador
     const apellidosEntrenador = req.body.apellidosEntrenador
     const usuarioEntrenador = req.body.usuarioEntrenador
     const correoEntrenador = req.body.correoEntrenador
     const claveEntrenador = req.body.claveEntrenador
     const verificacionEntrenador = req.body.verificarEntrenador
-    const fecha = new Date()
     var expresion = /\w+@\w+\.+[a-z]/; 
     bcrypt.hash(claveEntrenador, 10, (err, hash)=>{
-        if(err) throw err
-        let sql = `INSERT INTO reg_trainer(name_t, lastName_t, user_t, email_t, psw_t, access_level_trainer) VALUES ("${nombresEntrenador}","${apellidosEntrenador}", "${usuarioEntrenador}", "${correoEntrenador}", "${hash}", "Entrenador")`
-        conexion.query(sql, ()=>{
+        if(err){
+            throw err
+        }else{
             if(!nombresEntrenador||!apellidosEntrenador||!usuarioEntrenador||!correoEntrenador||!claveEntrenador||!verificacionEntrenador){
                 res.send("Complete los datos para continuar")
             }
@@ -105,13 +130,17 @@ server.post("/Registrar_Entrenador", (req, res)=>{
                 res.send("Las contraseñas no coinciden")
             }
             else{
-                res.send("Usuario Registrado")
+                let sql = `INSERT INTO reg_trainer(name_t, lastName_t, user_t, email_t, psw_t, access_level_trainer) VALUES ("${nombresEntrenador}","${apellidosEntrenador}", "${usuarioEntrenador}", "${correoEntrenador}", "${hash}", "Entrenador")`
+                conexion.query(sql, (err)=>{
+                    if(err) throw err
+                    res.redirect("/Login")
+                })
             }
-        })
+        }
     })
 })
 
-server.post("/Iniciar_Sesion", (req, res)=>{
+app.post("/Iniciar_Sesion", (req, res)=>{
     const usuarioLoginA = req.body.usuarioLoginA
     const claveLoginA = req.body.claveLoginA
     let sql1 = `SELECT * FROM reg_user WHERE user_u = "${usuarioLoginA}";`
@@ -129,7 +158,9 @@ server.post("/Iniciar_Sesion", (req, res)=>{
                         }else{
                             const idt = data[0].id_t
                             const token = jwt.sign({id: idt}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
-                            // conexion.query(`INSERT INTO reg_trainer(pass_t, time_t) VALUES("${token}", NOW())`)
+                            res.cookie("jwt", token)
+                            conexion.query(`UPDATE reg_trainer SET pass_t = "${token}", time_t = NOW() WHERE id_t = "${idt}";`)
+                            res.redirect("/TrainerPage")
                         }
                     })
                 }
@@ -141,14 +172,47 @@ server.post("/Iniciar_Sesion", (req, res)=>{
                 }else{
                     console.log("Atleta veradero")
                     const idu = data[0].id_u
-                            const token = jwt.sign({id: idu}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
-                            console.log(token, idu)
-                            // conexion.query(`SELECT * FROM reg_user WHERE id_u = "${idu}";`, (err)=>{
-                            //     if(err) throw err
-                            //     conexion.query(`INSERT INTO reg_user(pass_u, time_u) VALUES("${token}", NOW());`)
-                            // })
+                    const token = jwt.sign({id: idu}, process.env.SECRET_WORD, {expiresIn: process.env.EXPIRE_JWT})
+                    res.cookie("jwt", token)
+                    conexion.query(`UPDATE reg_user SET pass_u = "${token}", time_u = NOW() WHERE id_u = "${idu}";`)
+                    res.redirect("/UserPage")
                 }
             })
         }
     })
 })
+
+app.post("/TrainerPage/newRoutine", (req, res)=>{
+    const verification = promisify(jwt.verify)(req.cookies.jwt, process.env.SECRET_WORD)
+    conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}";`, (err, data)=>{
+    console.log(data[0])
+    })
+    // const {exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise7, exercise8, exercise9, exercise10} = req.body
+    // conexion.query(`INSERT INTO routines_novato(exercies1, exercies2, exercies3, exercies4, exercies5, exercies6, exercies7, exercies8, exercies9, exercies10) VALUES("${exercise1}", "${exercise2}", "${exercise3}", "${exercise4}", "${exercise5}", "${exercise6}", "${exercise7}", "${exercise8}", "${exercise9}", "${exercise10}");`, (err, data)=>{
+    // })
+})
+
+function autenthicate(req, res, next){
+    if(req.cookies.jwt){
+        const verification = jwt.verify(req.cookies.jwt, process.env.SECRET_WORD)
+        conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}";`, (err, data)=>{
+            if(data[0] == undefined){
+                console.log("No tienes permiso Atleta .i.")
+                conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}";`, (err, data)=>{
+                    if(data[0] == undefined){
+                        console.log("No tienes permiso entrenador .i.")
+                    }else{
+                        console.log("Bienvenido entrenador uwu")
+                        return next()
+                    }
+                })
+            }else{
+                console.log("Bievenido atleta uwu")
+                return next()
+            }
+        })
+    }else{
+        console.log(".i.")
+        res.redirect("/")
+    }
+}
