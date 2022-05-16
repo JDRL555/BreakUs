@@ -29,7 +29,6 @@ li:hover{
 }
 
 nav{
-    float: right;
     display: flex;
 }
 
@@ -40,6 +39,7 @@ nav li{
 
 .breakus{
     float: left;
+    padding-right: 30px;
 }
 
 nav #profileBtn:hover li{

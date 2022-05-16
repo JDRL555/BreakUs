@@ -22,6 +22,6 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.16",
-    "sweetalert2": "^11.4.14"
+    "popups": "^1.1.3"
   }
 }

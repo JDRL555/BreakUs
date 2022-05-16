@@ -4,20 +4,21 @@ let rutineBtn=document.getElementById("rutineBtn")
 let planBtn=document.getElementById("planBtn")
 let userBtn=document.getElementById("userBtn")
 let content=document.getElementById("rutine1")
+let btnPlan1Edit = document.getElementById("plan1")
+let btnPlan2Edit = document.getElementById("plan2")
+let btnPlan3Edit = document.getElementById("plan3")
 
 function Rutine(){
     document.getElementById("rutine").style.display='block';
     document.getElementById("user").style.display='none';
+    document.getElementById("plans").style.display='none';
 }
 
 function User(){
     document.getElementById("rutine").style.display='none';
+    document.getElementById("plans").style.display='none';
     document.getElementById("user").style.display='block';
 }
-rutineBtn.addEventListener('click', Rutine);
-userBtn.addEventListener('click', User);
-
-
 
 function Show(){
        if(content.style.display==='none'){
@@ -26,30 +27,45 @@ function Show(){
            content.style.display='none';
        }
 }
-btn1.addEventListener("click", Show);
 
-function No(){
-    alert("Estimado usuario, para poder volver a seleccionar algun plan, debe poseer una cuenta como administrador.")
-    alert("De no ser asi, usted no tiene acceso al cambio del plan")
+function Ready(){
+    window.location.assign("/complete_routine")
 }
-planBtn.addEventListener('click', No)
-
-var value_name=window.localStorage.getItem("Nombre")
-var value_lastName=window.localStorage.getItem("Apellido")
-var value_user=window.localStorage.getItem("Usuario")
-var value_email=window.localStorage.getItem("Correo")
-var value_date=window.localStorage.getItem("fechaDeInicio")
-
-var td_name=document.getElementById("value_name")
-var td_lastName=document.getElementById("value_lastName")
-var td_user=document.getElementById("value_user")
-var td_email=document.getElementById("value_email")
-var td_date=document.getElementById("value_date")
 
 
-td_name.innerHTML=value_name
-td_lastName.innerHTML=value_lastName
-td_user.innerHTML=value_user
-td_email.innerHTML=value_email
-td_date.innerHTML=value_date
+function Edit(){
+    document.getElementById("rutine").style.display='none';
+    document.getElementById("user").style.display='none';
+    document.getElementById("plans").style.display='block';
+}
 
+
+function Plan1_edit(){
+    var confirmar = confirm("¿Seguro que desea continuar?")
+    if(confirmar){
+        window.location.assign("/plan_novato_edit")
+    }
+}
+
+function Plan2_edit(){
+    var confirmar = confirm("¿Seguro que desea continuar?")
+    if(confirmar){
+        window.location.assign("/plan_intermedio_edit")
+    }
+}
+
+function Plan3_edit(){
+    var confirmar = confirm("¿Seguro que desea continuar?")
+    if(confirmar){
+        window.location.assign("/plan_avanzado_edit")
+    }
+}
+
+rutineBtn.addEventListener('click', Rutine);
+userBtn.addEventListener('click', User);
+btn1.addEventListener("click", Show);
+btn2.addEventListener("click", Ready);
+planBtn.addEventListener('click', Edit);
+btnPlan1Edit.addEventListener("click", Plan1_edit)
+btnPlan2Edit.addEventListener("click", Plan2_edit)
+btnPlan3Edit.addEventListener("click", Plan3_edit)
