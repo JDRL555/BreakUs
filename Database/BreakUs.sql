@@ -1,4 +1,5 @@
 CREATE DATABASE breakus_database;
+use breakus_database;
 
 CREATE TABLE IF NOT EXISTS reg_user(
     id_u INT UNSIGNED NOT NULL AUTO_INCREMENT,

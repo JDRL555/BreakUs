@@ -434,9 +434,9 @@ function hi_user(req, res, next){
         const verification = jwt.verify(req.cookies.jwt_u, process.env.SECRET_WORD_USER)
         conexion.query(`SELECT * FROM reg_user WHERE id_u = "${verification.id}"`, (err, data)=>{
             if(err) throw err
-            conexion.query(`SELECT hi_user("${data[0].user_u}")`, (err, data)=>{
-                console.log(data[0])
-            })
+            // conexion.query(`SELECT hi_user("${data[0].user_u}")`, (err, data)=>{
+            //     console.log(data[0])
+            // })
             return next()
         })
     }
@@ -447,9 +447,9 @@ function hi_trainer(req, res, next){
         const verification = jwt.verify(req.cookies.jwt_t, process.env.SECRET_WORD_TRAINER)
         conexion.query(`SELECT * FROM reg_trainer WHERE id_t = "${verification.id}"`, (err, data)=>{
             if(err) throw err
-            conexion.query(`SELECT hi_trainer("${data[0].user_t}")`, (err, data)=>{
-                console.log(data[0])
-            })
+            // conexion.query(`SELECT hi_trainer("${data[0].user_t}")`, (err, data)=>{
+            //     console.log(data[0])
+            // })
             return next()
         })
     }
